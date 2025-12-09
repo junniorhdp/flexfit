@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Flexfit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.2) 100%);
+        }
+        .gradient-card-blue {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.2) 100%);
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-red-950 to-slate-900 min-h-screen">
+
+<!-- Header -->
+<header class="bg-slate-900/80 backdrop-blur-xl border-b border-red-500/20 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/30">
+                    <span class="text-white font-bold text-2xl">F</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-white">FlexFit</h1>
+                    <p class="text-red-400 text-sm">Panel de Administracion</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center gap-3 bg-slate-800/50 px-4 py-2 rounded-xl border border-red-500/30">
+                    <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-red-400 text-xs font-semibold">ADMINISTRADOR</p>
+                        <p class="text-white text-sm font-medium" th:text="${adminNombre}">Admin</p>
+                    </div>
+                </div>
+                <a th:href="@{/logout}" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-4 py-2 rounded-lg transition border border-red-500/20 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    <span class="hidden sm:inline">Salir</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- Bienvenida -->
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold text-white mb-2">Bienvenido, <span th:text="${adminNombre}" class="text-red-400">Admin</span></h2>
+        <p class="text-slate-400">Panel de control del sistema FlexFit</p>
+    </div>
+
+    <!-- Estadisticas principales -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+        <!-- Total Usuarios -->
+        <div class="gradient-card backdrop-blur-sm border border-blue-500/20 rounded-2xl p-6 stat-card transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-4xl font-bold text-white mb-1" th:text="${totalUsuarios}">0</p>
+            <p class="text-slate-400">Usuarios Registrados</p>
+        </div>
+
+        <!-- Total Rutinas -->
+        <div class="gradient-card backdrop-blur-sm border border-emerald-500/20 rounded-2xl p-6 stat-card transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                </div>
+            </div>
+            <p class="text-4xl font-bold text-white mb-1" th:text="${totalRutinas}">0</p>
+            <p class="text-slate-400">Rutinas Creadas</p>
+        </div>
+
+        <!-- Total Ejercicios -->
+        <div class="gradient-card backdrop-blur-sm border border-orange-500/20 rounded-2xl p-6 stat-card transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                </div>
+                <span class="bg-orange-500/10 text-orange-400 text-xs font-medium px-2 py-1 rounded-full border border-orange-500/20">
+                    Catalogo
+                </span>
+            </div>
+            <p class="text-4xl font-bold text-white mb-1" th:text="${totalEjercicios}">0</p>
+            <p class="text-slate-400">Ejercicios Disponibles</p>
+        </div>
+
+        <!-- Estado del Sistema -->
+        <div class="gradient-card backdrop-blur-sm border border-purple-500/20 rounded-2xl p-6 stat-card transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <span class="bg-emerald-500/10 text-emerald-400 text-xs font-medium px-2 py-1 rounded-full border border-emerald-500/20">
+                    Activo
+                </span>
+            </div>
+            <p class="text-4xl font-bold text-emerald-400 mb-1">OK</p>
+            <p class="text-slate-400">Estado del Sistema</p>
+        </div>
+
+    </div>
+
+
+    <!-- Accesos Rapidos de Admin - RUTAS CORREGIDAS -->
+    <div class="mb-8">
+        <h3 class="text-xl font-bold text-white mb-4">Accesos Rapidos</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <!-- Gestionar Usuarios -->
+            <a th:href="@{/admin/usuarios}" class="gradient-card backdrop-blur-sm border border-blue-500/20 rounded-xl p-5 hover:border-blue-500/40 transition group">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:bg-blue-500/20 transition">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium">Gestionar Usuarios</p>
+                        <p class="text-slate-500 text-sm">Administrar cuentas</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Ver Reportes - CORREGIDO: /admin/reportes -->
+            <a th:href="@{/admin/reportes}" class="gradient-card backdrop-blur-sm border border-emerald-500/20 rounded-xl p-5 hover:border-emerald-500/40 transition group">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center group-hover:bg-emerald-500/20 transition">
+                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium">Ver Reportes</p>
+                        <p class="text-slate-500 text-sm">Estadisticas del sistema</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Catalogo Ejercicios - /ejercicios/catalogo -->
+            <a th:href="@{/ejercicios/catalogo}" class="gradient-card backdrop-blur-sm border border-orange-500/20 rounded-xl p-5 hover:border-orange-500/40 transition group">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center group-hover:bg-orange-500/20 transition">
+                        <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium">Catalogo Ejercicios</p>
+                        <p class="text-slate-500 text-sm">Ver y gestionar</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Agregar Ejercicio - /ejercicios/crear -->
+            <a th:href="@{/ejercicios/crear}" class="gradient-card backdrop-blur-sm border border-red-500/20 rounded-xl p-5 hover:border-red-500/40 transition group">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center group-hover:bg-red-500/20 transition">
+                        <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium">Agregar Ejercicio</p>
+                        <p class="text-slate-500 text-sm">Nuevo al catalogo</p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+
+    <!-- Panel de Ejercicios por Tipo -->
+    <div class="grid lg:grid-cols-2 gap-6 mb-8">
+
+        <!-- Ejercicios por Tipo de Entrenamiento -->
+        <div class="gradient-card backdrop-blur-sm border border-red-500/20 rounded-2xl p-6">
+            <h3 class="text-lg font-bold text-white mb-4">Ejercicios por Tipo de Entrenamiento</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-3 bg-slate-900/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-orange-500/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                            </svg>
+                        </div>
+                        <span class="text-white font-medium">Peso Libre</span>
+                    </div>
+                    <span class="text-2xl font-bold text-orange-400" th:text="${ejerciciosPesoLibre}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-900/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-white font-medium">Calistenia</span>
+                    </div>
+                    <span class="text-2xl font-bold text-blue-400" th:text="${ejerciciosCalistenia}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-900/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-red-500/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-white font-medium">Crossfit</span>
+                    </div>
+                    <span class="text-2xl font-bold text-red-400" th:text="${ejerciciosCrossfit}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-900/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-white font-medium">Yoga</span>
+                    </div>
+                    <span class="text-2xl font-bold text-purple-400" th:text="${ejerciciosYoga}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-900/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <span class="text-white font-medium">Cardio</span>
+                    </div>
+                    <span class="text-2xl font-bold text-emerald-400" th:text="${ejerciciosCardio}">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen del Sistema -->
+        <div class="gradient-card-blue backdrop-blur-sm border border-blue-500/20 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-bold text-white">Resumen del Sistema</h3>
+                <span class="bg-emerald-500/10 text-emerald-400 text-xs font-medium px-3 py-1 rounded-full border border-emerald-500/20">
+                    En linea
+                </span>
+            </div>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-slate-900/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium">Usuarios</p>
+                            <p class="text-slate-500 text-sm">Registrados</p>
+                        </div>
+                    </div>
+                    <span class="text-2xl font-bold text-white" th:text="${totalUsuarios}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-slate-900/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium">Rutinas</p>
+                            <p class="text-slate-500 text-sm">Totales</p>
+                        </div>
+                    </div>
+                    <span class="text-2xl font-bold text-white" th:text="${totalRutinas}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-slate-900/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-orange-500/10 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium">Ejercicios</p>
+                            <p class="text-slate-500 text-sm">En catalogo</p>
+                        </div>
+                    </div>
+                    <span class="text-2xl font-bold text-white" th:text="${totalEjercicios}">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="py-6 text-center border-t border-slate-800/50">
+    <p class="text-slate-600 text-sm">FlexFit Admin Panel 2025</p>
+</footer>
+
+</body>
+</html>

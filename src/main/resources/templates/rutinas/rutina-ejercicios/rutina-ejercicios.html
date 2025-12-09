@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios de Rutina</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="max-w-4xl mx-auto mt-10">
+
+    <h1 class="text-3xl font-bold mb-6" th:text="'Rutina: ' + ${rutina.nombre}"></h1>
+
+    <a th:href="@{'/rutina-ejercicios/agregar/' + ${rutina.id}}"
+       class="px-4 py-2 bg-blue-600 text-white rounded-lg mb-4 inline-block">
+        ➕ Agregar Ejercicio
+    </a>
+
+    <div class="bg-white rounded-lg shadow-md">
+        <table class="w-full text-left">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="p-3">Orden</th>
+                <th class="p-3">Ejercicio</th>
+                <th class="p-3">Series</th>
+                <th class="p-3">Reps</th>
+                <th class="p-3">Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="re : ${ejercicios}" class="border-b">
+                <td class="p-3" th:text="${re.orden}"></td>
+                <td class="p-3" th:text="${re.ejercicio.nombre}"></td>
+                <td class="p-3" th:text="${re.series}"></td>
+                <td class="p-3" th:text="${re.repeticiones}"></td>
+
+                <td class="p-3 flex gap-2">
+                    <a th:href="@{'/rutina-ejercicios/editar/' + ${re.id}}"
+                       class="bg-yellow-500 text-white px-3 py-1 rounded">✏</a>
+
+                    <a th:href="@{'/rutina-ejercicios/eliminar/' + ${re.id}}"
+                       onclick="return confirm('¿Eliminar ejercicio?')"
+                       class="bg-red-600 text-white px-3 py-1 rounded">🗑</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a th:href="@{'/rutinas/detalle/' + ${rutina.id}}"
+       class="mt-4 inline-block text-blue-600 hover:underline">⬅ Volver</a>
+
+</div>
+
+</body>
+</html>

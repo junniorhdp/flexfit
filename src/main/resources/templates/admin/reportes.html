@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - FlexFit Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.2) 100%);
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+        .bar-animate {
+            animation: growBar 1s ease-out forwards;
+        }
+        @keyframes growBar {
+            from { width: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-red-950 to-slate-900 min-h-screen">
+
+<!-- Header -->
+<header class="bg-slate-900/80 backdrop-blur-xl border-b border-red-500/20 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a th:href="@{/admin}" class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/30">
+                        <span class="text-white font-bold text-2xl">F</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-white">FlexFit</h1>
+                        <p class="text-red-400 text-sm">Reportes y Estadisticas</p>
+                    </div>
+                </a>
+            </div>
+            <a th:href="@{/admin}" class="bg-slate-800/50 hover:bg-slate-700/50 text-white px-4 py-2 rounded-lg transition border border-slate-700 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Volver al Panel
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- Titulo -->
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold text-white mb-2">Reportes del Sistema</h2>
+        <p class="text-slate-400">Vision completa de las estadisticas y metricas de FlexFit</p>
+    </div>
+
+    <!-- Estadisticas principales -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+        <!-- Total Usuarios -->
+        <div class="gradient-card backdrop-blur-sm border border-blue-500/20 rounded-2xl p-6 stat-card transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </div>
+                <span class="bg-blue-500/10 text-blue-400 text-xs font-medium px-2 py-1 rounded-full border border-blue-500/20">
+                    Usuarios
+                </span>
+            </div>
+            <p class="text-4xl font-bold text-white mb-1" th:text="${totalUsuarios}">0</p>
+            <p class="text-slate-400">Usuarios Registrados</p>
+        </div>
+
+        <!-- Total Rutinas -->
+        <div class="gradient-card backdrop-blur-sm border border-emerald-500/20 rounded-2xl p-6 stat-card transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                </div>
+                <span class="bg-emerald-500/10 text-emerald-400 text-xs font-medium px-2 py-1 rounded-full border border-emerald-500/20">
+                    Rutinas
+                </span>
+            </div>
+            <p class="text-4xl font-bold text-white mb-1" th:text="${totalRutinas}">0</p>
+            <p class="text-slate-400">Rutinas Creadas</p>
+        </div>
+
+        <!-- Total Ejercicios -->
+        <div class="gradient-card backdrop-blur-sm border border-orange-500/20 rounded-2xl p-6 stat-card transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <span class="bg-orange-500/10 text-orange-400 text-xs font-medium px-2 py-1 rounded-full border border-orange-500/20">
+                    Catalogo
+                </span>
+            </div>
+            <p class="text-4xl font-bold text-white mb-1" th:text="${totalEjercicios}">0</p>
+            <p class="text-slate-400">Ejercicios Disponibles</p>
+        </div>
+
+        <!-- Promedio Rutinas por Usuario -->
+        <div class="gradient-card backdrop-blur-sm border border-purple-500/20 rounded-2xl p-6 stat-card transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <span class="bg-purple-500/10 text-purple-400 text-xs font-medium px-2 py-1 rounded-full border border-purple-500/20">
+                    Promedio
+                </span>
+            </div>
+            <p class="text-4xl font-bold text-white mb-1" th:text="${promedioRutinasPorUsuario}">0</p>
+            <p class="text-slate-400">Rutinas por Usuario</p>
+        </div>
+
+    </div>
+
+    <!-- Segunda fila de reportes -->
+    <div class="grid lg:grid-cols-2 gap-6 mb-8">
+
+        <!-- Rutinas por Semana -->
+        <div class="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    Rutinas Creadas por Semana
+                </h3>
+                <span class="text-slate-500 text-sm">Ultimas 4 semanas</span>
+            </div>
+            <div class="space-y-4">
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-400 w-28 text-sm">Hace 4 semanas</span>
+                    <div class="flex-1 bg-slate-800 rounded-full h-6 overflow-hidden">
+                        <div class="bg-gradient-to-r from-red-500 to-orange-500 h-6 rounded-full bar-animate flex items-center justify-end pr-2"
+                             th:style="'width: ' + (${rutinasSemana4} > 0 ? (${rutinasSemana4} * 10 > 100 ? 100 : ${rutinasSemana4} * 10) : 5) + '%'">
+                            <span class="text-white text-xs font-bold" th:text="${rutinasSemana4}">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-400 w-28 text-sm">Hace 3 semanas</span>
+                    <div class="flex-1 bg-slate-800 rounded-full h-6 overflow-hidden">
+                        <div class="bg-gradient-to-r from-red-500 to-orange-500 h-6 rounded-full bar-animate flex items-center justify-end pr-2"
+                             th:style="'width: ' + (${rutinasSemana3} > 0 ? (${rutinasSemana3} * 10 > 100 ? 100 : ${rutinasSemana3} * 10) : 5) + '%'">
+                            <span class="text-white text-xs font-bold" th:text="${rutinasSemana3}">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-400 w-28 text-sm">Hace 2 semanas</span>
+                    <div class="flex-1 bg-slate-800 rounded-full h-6 overflow-hidden">
+                        <div class="bg-gradient-to-r from-red-500 to-orange-500 h-6 rounded-full bar-animate flex items-center justify-end pr-2"
+                             th:style="'width: ' + (${rutinasSemana2} > 0 ? (${rutinasSemana2} * 10 > 100 ? 100 : ${rutinasSemana2} * 10) : 5) + '%'">
+                            <span class="text-white text-xs font-bold" th:text="${rutinasSemana2}">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-400 w-28 text-sm">Esta semana</span>
+                    <div class="flex-1 bg-slate-800 rounded-full h-6 overflow-hidden">
+                        <div class="bg-gradient-to-r from-emerald-500 to-emerald-400 h-6 rounded-full bar-animate flex items-center justify-end pr-2"
+                             th:style="'width: ' + (${rutinasSemana1} > 0 ? (${rutinasSemana1} * 10 > 100 ? 100 : ${rutinasSemana1} * 10) : 5) + '%'">
+                            <span class="text-white text-xs font-bold" th:text="${rutinasSemana1}">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen semanal -->
+            <div class="mt-6 pt-4 border-t border-slate-800 grid grid-cols-2 gap-4">
+                <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+                    <p class="text-2xl font-bold text-red-400" th:text="${rutinasSemana1 + rutinasSemana2 + rutinasSemana3 + rutinasSemana4}">0</p>
+                    <p class="text-slate-500 text-sm">Total 4 semanas</p>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+                    <p class="text-2xl font-bold text-emerald-400" th:text="${#numbers.formatDecimal((rutinasSemana1 + rutinasSemana2 + rutinasSemana3 + rutinasSemana4) / 4.0, 1, 1)}">0</p>
+                    <p class="text-slate-500 text-sm">Promedio semanal</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Usuarios -->
+        <div class="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                    </svg>
+                    Top Usuarios Activos
+                </h3>
+                <span class="text-slate-500 text-sm">Por rutinas creadas</span>
+            </div>
+
+            <div class="space-y-3">
+                <div th:each="usuario, stat : ${topUsuarios}" class="flex items-center justify-between p-4 rounded-xl transition"
+                     th:classappend="${stat.index == 0} ? 'bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20' : 'bg-slate-800/30 hover:bg-slate-800/50'">
+                    <div class="flex items-center gap-4">
+                        <div th:class="${stat.index == 0} ? 'w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg' : 'w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center'">
+                            <span th:if="${stat.index == 0}" class="text-white text-xl">🏆</span>
+                            <span th:if="${stat.index != 0}" class="text-white font-bold" th:text="${stat.index + 1}">2</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium" th:text="${usuario[0]}">Usuario</p>
+                            <p th:if="${stat.index == 0}" class="text-amber-400 text-xs font-medium">Mas activo</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p th:class="${stat.index == 0} ? 'text-2xl font-bold text-amber-400' : 'text-xl font-bold text-white'" th:text="${usuario[1]}">0</p>
+                        <p class="text-slate-500 text-sm">rutinas</p>
+                    </div>
+                </div>
+
+                <!-- Mensaje si no hay usuarios -->
+                <div th:if="${#lists.isEmpty(topUsuarios)}" class="text-center py-8">
+                    <div class="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-slate-500">No hay datos de usuarios aun</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tercera fila - Metricas adicionales -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Distribucion de Ejercicios -->
+        <div class="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-6">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                </svg>
+                Ejercicios por Tipo
+            </h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                        <span class="text-slate-300">Peso Libre</span>
+                    </div>
+                    <span class="text-white font-bold" th:text="${ejerciciosPesoLibre ?: 0}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <span class="text-slate-300">Calistenia</span>
+                    </div>
+                    <span class="text-white font-bold" th:text="${ejerciciosCalistenia ?: 0}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <span class="text-slate-300">Crossfit</span>
+                    </div>
+                    <span class="text-white font-bold" th:text="${ejerciciosCrossfit ?: 0}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+                        <span class="text-slate-300">Yoga</span>
+                    </div>
+                    <span class="text-white font-bold" th:text="${ejerciciosYoga ?: 0}">0</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                        <span class="text-slate-300">Cardio</span>
+                    </div>
+                    <span class="text-white font-bold" th:text="${ejerciciosCardio ?: 0}">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen Rapido -->
+        <div class="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-6">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Resumen Rapido
+            </h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-slate-400">Rutinas esta semana</span>
+                    <span class="text-emerald-400 font-bold" th:text="${rutinasSemana1}">0</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-slate-400">Ejercicios en catalogo</span>
+                    <span class="text-orange-400 font-bold" th:text="${totalEjercicios}">0</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-slate-400">Usuarios activos</span>
+                    <span class="text-blue-400 font-bold" th:text="${totalUsuarios}">0</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-slate-400">Rutinas totales</span>
+                    <span class="text-purple-400 font-bold" th:text="${totalRutinas}">0</span>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium">Sistema Activo</p>
+                        <p class="text-slate-500 text-sm">Todo funcionando correctamente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Acciones Rapidas -->
+        <div class="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-6">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                Acciones Rapidas
+            </h3>
+            <div class="space-y-3">
+                <a th:href="@{/admin/usuarios}" class="flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-xl transition group">
+                    <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center group-hover:bg-blue-500/20 transition">
+                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-white group-hover:text-blue-400 transition">Ver Usuarios</span>
+                </a>
+                <a th:href="@{/ejercicios/catalogo}" class="flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-xl transition group">
+                    <div class="w-10 h-10 bg-orange-500/10 rounded-lg flex items-center justify-center group-hover:bg-orange-500/20 transition">
+                        <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                    </div>
+                    <span class="text-white group-hover:text-orange-400 transition">Ver Ejercicios</span>
+                </a>
+                <a th:href="@{/ejercicios/crear}" class="flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-xl transition group">
+                    <div class="w-10 h-10 bg-red-500/10 rounded-lg flex items-center justify-center group-hover:bg-red-500/20 transition">
+                        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <span class="text-white group-hover:text-red-400 transition">Nuevo Ejercicio</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="py-6 text-center border-t border-slate-800/50 mt-8">
+    <p class="text-slate-600 text-sm">FlexFit Admin Panel 2025</p>
+</footer>
+
+</body>
+</html>

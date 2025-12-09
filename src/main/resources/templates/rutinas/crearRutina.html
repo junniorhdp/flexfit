@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear Rutina</title>
+</head>
+<body>
+
+<h1>Crear nueva rutina</h1>
+
+<form method="post" th:action="@{/rutinas/guardar}">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required><br>
+
+    <label>Descripción:</label>
+    <textarea name="descripcion"></textarea><br>
+
+    <h3>Seleccionar ejercicios</h3>
+
+    <div th:each="e : ${ejercicios}">
+        <input type="checkbox" th:name="|ejercicioId|" th:value="${e.id}">
+        <span th:text="${e.nombre}"></span>
+
+        <br>Series:
+        <input type="number" name="series" min="1">
+
+        <br>Repeticiones:
+        <input type="text" name="repeticiones">
+
+        <hr>
+    </div>
+
+    <button type="submit">Guardar Rutina</button>
+</form>
+
+</body>
+</html>

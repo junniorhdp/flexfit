@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Ejercicios - Flexfit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 min-h-screen">
+
+<!-- Header -->
+<header class="bg-blue-950/50 backdrop-blur-sm border-b border-blue-700/50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold text-xl">F</span>
+            </div>
+            <h1 class="text-2xl font-bold text-white">Reporte de <span class="text-blue-300">Ejercicios</span></h1>
+        </div>
+        <a th:href="@{/reportes}" class="text-blue-200 hover:text-white transition flex items-center gap-2">
+            ← Volver a Reportes
+        </a>
+    </div>
+</header>
+
+<!-- Contenido Principal -->
+<main class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- Filtros -->
+    <div class="bg-white/10 backdrop-blur-sm border border-blue-400/30 rounded-2xl p-6 mb-8">
+        <h3 class="text-xl font-bold text-white mb-4">Filtros Multicriterio</h3>
+
+        <form th:action="@{/reportes/ejercicios}" method="get" class="grid md:grid-cols-3 gap-4">
+
+            <!-- Filtro por Tipo de Entrenamiento -->
+            <div>
+                <label class="block text-blue-200 text-sm font-medium mb-2">Tipo de Entrenamiento</label>
+                <select name="tipoEntrenamiento"
+                        class="w-full bg-blue-900/50 border border-blue-500/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <option value="">Todos los tipos</option>
+                    <option th:each="tipo : ${tiposEntrenamiento}"
+                            th:value="${tipo}"
+                            th:text="${tipo.displayName}">Tipo</option>
+                </select>
+            </div>
+
+            <!-- Filtro por Músculo -->
+            <div>
+                <label class="block text-blue-200 text-sm font-medium mb-2">Músculo Principal</label>
+                <select name="musculo"
+                        class="w-full bg-blue-900/50 border border-blue-500/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <option value="">Todos los músculos</option>
+                    <option th:each="musculo : ${musculosPrincipales}"
+                            th:value="${musculo}"
+                            th:text="${musculo}">Músculo</option>
+                </select>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex items-end gap-2">
+                <button type="submit"
+                        class="flex-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-6 rounded-lg transition">
+                    Filtrar
+                </button>
+                <a th:href="@{/reportes/ejercicios}"
+                   class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition">
+                    Limpiar
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Indicador de filtro activo -->
+    <div th:if="${filtroActivo}" class="bg-blue-500/20 border border-blue-400/50 rounded-lg px-4 py-2 mb-6 inline-block">
+        <span class="text-blue-200">Filtro aplicado</span>
+    </div>
+
+    <!-- Tabla de Resultados -->
+    <div class="bg-white/10 backdrop-blur-sm border border-blue-400/30 rounded-2xl overflow-hidden">
+        <table class="w-full">
+            <thead class="bg-blue-900/50">
+            <tr>
+                <th class="px-6 py-4 text-left text-blue-200 font-semibold">ID</th>
+                <th class="px-6 py-4 text-left text-blue-200 font-semibold">Nombre</th>
+                <th class="px-6 py-4 text-left text-blue-200 font-semibold">Tipo Entrenamiento</th>
+                <th class="px-6 py-4 text-left text-blue-200 font-semibold">Músculo Principal</th>
+                <th class="px-6 py-4 text-left text-blue-200 font-semibold">Descripción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ejercicio, iterStat : ${ejercicios}"
+                th:class="${iterStat.odd} ? 'bg-white/5' : 'bg-transparent'"
+                class="border-t border-blue-700/30 hover:bg-white/10 transition">
+                <td class="px-6 py-4 text-white" th:text="${ejercicio.id}">1</td>
+                <td class="px-6 py-4 text-white font-medium" th:text="${ejercicio.nombre}">Ejercicio</td>
+                <td class="px-6 py-4">
+                            <span class="bg-blue-500/30 text-blue-200 px-3 py-1 rounded-full text-sm"
+                                  th:text="${ejercicio.tipoEntrenamiento?.displayName}">Tipo</span>
+                </td>
+                <td class="px-6 py-4">
+                            <span class="bg-emerald-500/30 text-emerald-200 px-3 py-1 rounded-full text-sm"
+                                  th:text="${ejercicio.musculoPrimario}">Músculo</span>
+                </td>
+                <td class="px-6 py-4 text-blue-200 text-sm" th:text="${ejercicio.descripcion}">Descripción</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Mensaje si no hay resultados -->
+        <div th:if="${#lists.isEmpty(ejercicios)}" class="text-center py-12">
+            <p class="text-blue-300 text-lg">No se encontraron ejercicios con los filtros seleccionados</p>
+        </div>
+    </div>
+
+    <!-- Contador de resultados -->
+    <div class="mt-6 text-center">
+        <p class="text-blue-200">
+            Total de ejercicios: <span class="text-white font-bold" th:text="${#lists.size(ejercicios)}">0</span>
+        </p>
+    </div>
+
+</main>
+
+</body>
+</html>
