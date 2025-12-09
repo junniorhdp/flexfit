@@ -12,6 +12,8 @@
   <h3>Aplicación web para la gestión personalizada de rutinas de entrenamiento</h3>
   <p><strong>SENA - Ficha 3197833 | Tecnólogo en Programación de Software</strong></p>
   <p>Fecha: 09/12/2025</p>
+  <p>JUNIOR ALIRIO GONZALEZ OCHOA</p>
+  <p>ABEL FELIPE AGUILERA</p>
 </div>
 
 ---
@@ -229,8 +231,7 @@ Interfaz para crear, editar y gestionar rutinas personalizadas.
 ## Equipo de Desarrollo
 
 **SENA - Centro de Servicios Financieros****Tecnólogo en Programación de Software****Ficha: 3197833**
-###-Junior Alirio Gonzalez Ochoa
-###-Abel Felipe Aguilera
+
 ---
 
 ## Estado del Proyecto
